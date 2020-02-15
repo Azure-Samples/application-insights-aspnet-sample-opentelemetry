@@ -1,0 +1,19 @@
+{
+  "profiles": {
+    "Sample.TimeApi": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "launchUrl": "api/time/dbtime",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "http://localhost:5002"
+    },
+    "Docker": {
+      "commandName": "Docker",
+      "launchBrowser": true,
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/api/time/dbtime",
+      "publishAllPorts": true
+    }
+  }
+}

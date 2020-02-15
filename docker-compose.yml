@@ -1,0 +1,109 @@
+version: '3.4'
+
+services:
+  sample.mainapi:
+    image: ${DOCKER_REGISTRY-}dotnetobservabilitysample-mainapi:${TAG-latest}
+    environment:
+      - SampleApp__RabbitMQHostName=rabbitmq
+      - SampleApp__TimeAPIUrl=http://sample.timeapi
+      - SampleApp__UseApplicationInsights=${USE_APPLICATIONINSIGHTS-false}
+      - SampleApp__UseOpenTelemetry=${USE_OPENTELEMETRY-true}
+      - SampleApp__ApplicationInsightsInstrumentationKey=${AI_INSTRUMENTATIONKEY-}
+      - SampleApp__ApplicationInsightsForOpenTelemetryInstrumentationKey=${AI_INSTRUMENTATIONKEY_OPENTELEMETRY-}
+      - OpenTelemetry__Prometheus__Url=http://sample.mainapi:9184/metrics/
+      - OpenTelemetry__Jaeger__AgentHost=${JAEGER_AGENTHOST-jaeger}
+    depends_on:
+      - rabbitmq
+      - sample.timeapi
+      - prometheus
+      - jaeger
+    build:
+      context: .
+      dockerfile: src/Sample.MainApi/Dockerfile
+    ports:
+      - "5001:80"
+      - "9184:9184"
+
+  sample.rabbitmqprocessor:
+    image: ${DOCKER_REGISTRY-}dotnetobservabilitysample-rabbitmqprocessor:${TAG-latest}
+    environment:
+      - SampleApp__RabbitMQHostName=rabbitmq
+      - SampleApp__TimeAPIUrl=http://sample.timeapi
+      - SampleApp__UseApplicationInsights=${USE_APPLICATIONINSIGHTS-false}
+      - SampleApp__UseOpenTelemetry=${USE_OPENTELEMETRY-true}
+      - SampleApp__ApplicationInsightsInstrumentationKey=${AI_INSTRUMENTATIONKEY-}
+      - SampleApp__ApplicationInsightsForOpenTelemetryInstrumentationKey=${AI_INSTRUMENTATIONKEY_OPENTELEMETRY-}      
+      - OpenTelemetry__Jaeger__AgentHost=${JAEGER_AGENTHOST-jaeger}
+    depends_on:
+      - rabbitmq
+      - sample.timeapi
+      - prometheus
+      - jaeger
+    build:
+      context: .
+      dockerfile: src/Sample.RabbitMQProcessor/Dockerfile
+
+  sample.timeapi:
+    image: ${DOCKER_REGISTRY-}dotnetobservabilitysample-timeapi:${TAG-latest}
+    environment:
+      - SampleApp__RabbitMQHostName=rabbitmq
+      - SampleApp__TimeAPIUrl=http://sample.timeapi
+      - SampleApp__UseApplicationInsights=${USE_APPLICATIONINSIGHTS-false}
+      - SampleApp__UseOpenTelemetry=${USE_OPENTELEMETRY-true}
+      - SampleApp__ApplicationInsightsInstrumentationKey=${AI_INSTRUMENTATIONKEY-}
+      - SampleApp__ApplicationInsightsForOpenTelemetryInstrumentationKey=${AI_INSTRUMENTATIONKEY_OPENTELEMETRY-}      
+      - SqlConnectionString=server=sqlserver;user id=sa;password=Pass@Word1;
+      - OpenTelemetry__Jaeger__AgentHost=${JAEGER_AGENTHOST-jaeger}
+    depends_on:
+      - sqlserver
+      - prometheus
+      - jaeger
+    build:
+      context: .
+      dockerfile: src/Sample.TimeApi/Dockerfile
+    ports:
+      - "5002:80"
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - 15672
+      - 5672
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2019-GA-ubuntu-16.04
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Pass@Word1
+    ports:
+      - 1433
+
+  jaeger:
+    image: jaegertracing/all-in-one
+    environment:
+      - COLLECTOR_ZIPKIN_HTTP_PORT=19411
+    ports:
+    - 5775:5775/udp
+    - 6831:6831/udp
+    - 6832:6832/udp
+    - 5778:5778
+    - 16686:16686
+    - 14268:14268
+    - 19411:19411    
+
+  prometheus:
+    image: prom/prometheus
+    volumes: 
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    command: 
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    ports:
+        - 9090:9090
+  grafana:
+    image: grafana/grafana
+    environment: 
+      - GF_SECURITY_ADMIN_PASSWORD=password1
+    depends_on:
+      - prometheus
+    ports:
+      - 3000:3000

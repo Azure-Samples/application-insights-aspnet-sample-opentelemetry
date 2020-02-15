@@ -1,0 +1,15 @@
+version: '3.4'
+
+services:
+  sample.mainapi:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "5001:80"
+
+  sample.timeapi:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "5002:80"
+

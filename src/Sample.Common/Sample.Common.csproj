@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <ReleaseVersion>0.2</ReleaseVersion>
+    <LangVersion>8.0</LangVersion>
+  </PropertyGroup>
+
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="3.1.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.0" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.12.0" />
+    <PackageReference Include="Microsoft.ApplicationInsights" Version="2.12.0" />
+    <PackageReference Include="Microsoft.ApplicationInsights.WorkerService" Version="2.12.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="3.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="3.1.0" />    
+    <PackageReference Include="System.Text.Json" Version="4.7.0" />
+
+    <PackageReference Include="OpenTelemetry" Version="0.2.0-alpha.151" />
+    <PackageReference Include="OpenTelemetry.Exporter.Prometheus" Version="0.2.0-alpha.151" />
+    <PackageReference Include="OpenTelemetry.Collector.Dependencies" Version="0.2.0-alpha.151" />
+    <PackageReference Include="OpenTelemetry.Exporter.ApplicationInsights" Version="0.2.0-alpha.151" />
+    <PackageReference Include="OpenTelemetry.Exporter.Jaeger" Version="0.2.0-alpha.151" />
+    <PackageReference Include="OpenTelemetry.Exporter.Zipkin" Version="0.2.0-alpha.151" />
+    <PackageReference Include="OpenTelemetry.Collector.AspNetCore" Version="0.2.0-alpha.151" />
+    <PackageReference Include="OpenTelemetry.Hosting" Version="0.2.0-alpha.151" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <ProjectReference Include="..\Sample.RabbitMQCollector\Sample.RabbitMQCollector.csproj" />
+  </ItemGroup>
+</Project>
