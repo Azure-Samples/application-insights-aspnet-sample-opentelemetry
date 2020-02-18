@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using OpenTelemetry.Trace;
+﻿using OpenTelemetry.Trace;
 
 namespace Sample.Common
 {

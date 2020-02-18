@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using Microsoft.ApplicationInsights;
 using Microsoft.ApplicationInsights.Metrics;
 using Microsoft.Extensions.DependencyInjection;
-using OpenTelemetry.Exporter.Prometheus;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Metrics.Configuration;
-using OpenTelemetry.Metrics.Export;
 using OpenTelemetry.Trace;
 using Sample.Common;
 

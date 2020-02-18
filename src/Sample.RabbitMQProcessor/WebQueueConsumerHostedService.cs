@@ -9,7 +9,6 @@ using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using Microsoft.Extensions.DependencyInjection;
 using Sample.Common;
-using System.Diagnostics;
 using Microsoft.ApplicationInsights;
 using Microsoft.ApplicationInsights.DataContracts;
 using Microsoft.ApplicationInsights.Extensibility;
@@ -18,7 +17,6 @@ using System.Text;
 using Microsoft.Extensions.Options;
 using RabbitMQ.Client.Exceptions;
 using Sample.RabbitMQCollector;
-using System.Collections.Generic;
 
 namespace Sample.RabbitMQProcessor
 {

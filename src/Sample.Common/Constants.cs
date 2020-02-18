@@ -1,5 +1,4 @@
-﻿using System;
-namespace Sample.Common
+﻿namespace Sample.Common
 {
     public static class Constants
     {
