@@ -1,0 +1,22 @@
+# prometheus.yml
+global:
+  scrape_interval: 5s
+  external_labels:
+    monitor: 'dotnet-observability-sample'
+
+
+scrape_configs:
+  - job_name: 'prometheus'
+    scrape_interval: 5s
+    static_configs:
+         - targets: ['localhost:9090']
+
+  - job_name: 'main-api'
+    scrape_interval: 5s
+    static_configs:
+         - targets: ['sample.mainapi:9184']
+
+  - job_name: 'rabbitmq-processor'
+    scrape_interval: 5s
+    static_configs:
+         - targets: ['sample.rabbitmqprocessor:9185']

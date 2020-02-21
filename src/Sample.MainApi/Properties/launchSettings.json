@@ -1,0 +1,19 @@
+{
+  "profiles": {
+    "Sample.MainApi": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "launchUrl": "api/dbtime",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "http://localhost:5001"
+    },
+    "Docker": {
+      "commandName": "Docker",
+      "launchBrowser": true,
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/api/dbtime",
+      "publishAllPorts": true
+    }
+  }
+}
